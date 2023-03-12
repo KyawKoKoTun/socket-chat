@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/chat.css">
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+    <template id="chat">
+        <div class="message">
+            <h4></h4>
+            <p></p>
+        </div>
+    </template>
+    <div class="container">
+        <h1> Socket Chat</h1>
+        <a class="logout" href="/logout">Logout</a>
+        <div class="chat-ui">
+            <div class="chat" id="chats"> {% for message in messages %}
+                <div class="message">
+                    <h4> {{ message.name }}
+                    </h4>
+                    <p> {{ message.text }}
+                    </p>
+                </div> {% endfor %}
+            </div>
+            <div class="medium"></div>
+            <div class="active">
+                <h2> Online
+                </h2>
+                <div class="ball"> 0
+                </div>
+                <div id="active">
+                    {% for name in active %}
+                    <h3>{{name}}</h3>{% endfor %}</div>
+            </div>
+        </div>
+        <div class="input">
+            <input type="text" id="message" placeholder="Type here">
+            <button>Send</button>
+        </div>
+    </div>
+    <audio id="noti">
+        <source src="/static/noti.mp3" type="audio/ogg">
+    </audio>
+    <script>
+        noti = document.getElementById('noti')
+
+        function scrollBottom() {
+            var chat = document.querySelector(".chat");
+            chat.scrollTop = chat.scrollHeight;
+        }
+        scrollBottom()
+
+        function newMessage(name, message) {
+            var temp = document.getElementById('chat');
+            var clone = temp.content.cloneNode(true);
+            clone.querySelector('h4').textContent = name
+            clone.querySelector('p').textContent = message
+            document.getElementById('chats').appendChild(clone);
+        }
+
+        function newActive(name) {
+            content = ''
+            name.forEach((n) => {
+                content += '<h3>' + n + '</h3>'
+            })
+            document.querySelector('.ball').innerHTML = name.length
+            document.getElementById('active').innerHTML = content
+        }
+
+        var socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
+
+        socket.on('message', function(message) {
+            newMessage(message.name, message.text);
+            scrollBottom()
+            noti.play()
+        });
+        socket.on('active', function(name) {
+            newActive(name);
+        });
+        $(document).ready(function() {
+            $('button').click(function() {
+                socket.emit('message', $('#message').val());
+                $('#message').val('');
+                return false;
+            });
+            $('#message').keypress(function(e) {
+                if (e.keyCode == 13) {
+                    $('button').click();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
