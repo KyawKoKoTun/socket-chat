@@ -1,5 +1,5 @@
 flask
-psycopg2-binary
+psycopg2
 uvicorn
 dnspython<2.0.0
 gunicorn
