@@ -4,7 +4,6 @@ uvicorn
 dnspython<2.0.0
 gunicorn
 asyncio
-gevent
 eventlet==0.30.2
 flask-sqlalchemy
 flask-session
