@@ -1,4 +1,5 @@
 flask==2.2.2
+werkzeug==2.2.2
 flask-sqlalchemy==2.5.1
 sqlalchemy==1.4.45
 flask-session
