@@ -1,8 +1,8 @@
 flask==2.2.2
 psycopg2
-uvicorn
 flask-sqlalchemy==2.5.1
 sqlalchemy==1.4.45
 flask-session
-flask-socketio
+flask-socketio==4.4.1
+python-socketio==5.7.2
 python-dotenv
