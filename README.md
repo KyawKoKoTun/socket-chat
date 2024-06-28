@@ -17,13 +17,15 @@
    pip install -r requirements.txt
    ```
 
-4. Apply database migrations:
+4. Initialize Database:
    ```bash
-   python manage.py makemigrations
-   python manage.py migrate
+   # In Python Console
+   from app import app, db
+   with app.app_context():
+     db.create_all()
    ```
 
-5. Start the development server:
+6. Start the development server:
    ```bash
    python app.py
    ```
