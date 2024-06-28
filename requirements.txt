@@ -1,10 +1,8 @@
-flask
+flask==2.2.2
 psycopg2
 uvicorn
-dnspython<2.0.0
-gunicorn
-asyncio
-eventlet==0.30.2
-flask-sqlalchemy
+flask-sqlalchemy==2.5.1
+sqlalchemy==1.4.45
 flask-session
 flask-socketio
+python-dotenv

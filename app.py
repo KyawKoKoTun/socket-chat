@@ -4,6 +4,7 @@ from flask_socketio import *
 from models import *
 from settings import Settings
 import time
+import os
 
 app = Flask(__name__)
 app.config.from_object(Settings)
